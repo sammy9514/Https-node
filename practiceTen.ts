@@ -1,31 +1,37 @@
 import http, { IncomingMessage, ServerResponse } from "http";
-const port = 3027;
+const port = 3067;
 
 interface iData {
   id: number;
   name: string;
+  age: number;
 }
 
 const data: iData[] = [
   {
     id: 1,
     name: "sammy",
+    age: 14,
   },
   {
-    id: 2,
+    id: 1,
     name: "sammy",
+    age: 14,
   },
   {
-    id: 3,
+    id: 1,
     name: "sammy",
+    age: 14,
   },
   {
-    id: 4,
+    id: 1,
     name: "sammy",
+    age: 14,
   },
   {
-    id: 5,
+    id: 1,
     name: "sammy",
+    age: 14,
   },
 ];
 
@@ -38,35 +44,34 @@ interface iMessage {
 const server = http.createServer(
   (req: IncomingMessage, res: ServerResponse<IncomingMessage>) => {
     res.setHeader("Content-Type", "Application/Json");
-    let status = 404;
     const { url, method } = req;
-
+    let status = 404;
     let response: iMessage = {
       message: "failed",
       success: false,
-      data: null,
+      data: data,
     };
 
     const container: any = [];
     req
-      .on("data", (chunk: any) => {
-        container.push(chunk);
+      .on("data", (bits: any) => {
+        container.push(bits);
       })
       .on("end", () => {
-        if (url === "/" && method === "GET") {
+        if (url === "/about" && method === "GET") {
           status = 200;
-          response.message = "Successful";
+          response.message = "hurray";
           response.success = true;
           response.data = data;
           res.write(JSON.stringify({ response, status }));
           res.end();
         }
 
-        if (url === "/" && method === "POST") {
+        if (url === "/home" && method === "POST") {
           status = 201;
           const body = JSON.parse(container);
           data.push(body);
-          response.message = "done";
+          response.message = " success";
           response.success = true;
           response.data = data;
           res.write(JSON.stringify({ response, status }));
@@ -77,5 +82,5 @@ const server = http.createServer(
 );
 
 server.listen(port, () => {
-  console.log("Server is up and running");
+  console.log("Ran succeful");
 });
