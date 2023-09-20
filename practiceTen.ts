@@ -26,7 +26,7 @@ const data: iData[] = [
 interface iMessage {
   message: string;
   success: boolean;
-  data: null | {} | {}[];
+  data: null | {}[];
 }
 
 const server = http.createServer(
@@ -42,20 +42,20 @@ const server = http.createServer(
 
     const container: any = [];
     req
-      .on("data", (bit: any) => {
-        container.push(bit);
+      .on("data", (bity: any) => {
+        container.push(bity);
       })
       .on("end", () => {
         if (url === "/" && method === "GET") {
           status = 200;
-          response.message = "hurray";
+          response.message = "weldone";
           response.success = true;
           response.data = data;
           res.write(JSON.stringify({ response, status }));
           res.end();
         }
 
-        if (url === "/home" && method === "POST") {
+        if (url === "/" && method === "POST") {
           status = 201;
           const body = JSON.parse(container);
           data.push(body);
