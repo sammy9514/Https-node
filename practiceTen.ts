@@ -1,27 +1,31 @@
 import http, { IncomingMessage, ServerResponse } from "http";
-const port = 2400;
+const port = 3027;
 
-interface idata {
+interface iData {
   id: number;
   name: string;
 }
 
-const data: idata[] = [
+const data: iData[] = [
   {
     id: 1,
-    name: "ayomide",
+    name: "sammy",
   },
   {
-    id: 1,
-    name: "ayomide",
+    id: 2,
+    name: "sammy",
   },
   {
-    id: 1,
-    name: "ayomide",
+    id: 3,
+    name: "sammy",
   },
   {
-    id: 1,
-    name: "ayomide",
+    id: 4,
+    name: "sammy",
+  },
+  {
+    id: 5,
+    name: "sammy",
   },
 ];
 
@@ -30,16 +34,19 @@ interface iMessage {
   success: boolean;
   data: null | {} | {}[];
 }
+
 const server = http.createServer(
   (req: IncomingMessage, res: ServerResponse<IncomingMessage>) => {
     res.setHeader("Content-Type", "Application/Json");
     let status = 404;
     const { url, method } = req;
+
     let response: iMessage = {
       message: "failed",
       success: false,
       data: null,
     };
+
     const container: any = [];
     req
       .on("data", (chunk: any) => {
@@ -55,7 +62,7 @@ const server = http.createServer(
           res.end();
         }
 
-        if (url === "/server" && method === "POST") {
+        if (url === "/" && method === "POST") {
           status = 201;
           const body = JSON.parse(container);
           data.push(body);
@@ -70,5 +77,5 @@ const server = http.createServer(
 );
 
 server.listen(port, () => {
-  console.log("hi");
+  console.log("Server is up and running");
 });
