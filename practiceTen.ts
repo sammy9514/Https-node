@@ -5,6 +5,7 @@ interface iData {
   id: number;
   name: string;
   age: number;
+  stack: string;
 }
 
 const data: iData[] = [
@@ -12,11 +13,13 @@ const data: iData[] = [
     id: 1,
     name: "sammy",
     age: 14,
+    stack: "Full-Stack",
   },
   {
     id: 1,
     name: "ayo",
     age: 133,
+    stack: "Full-Stack",
   },
 ];
 
