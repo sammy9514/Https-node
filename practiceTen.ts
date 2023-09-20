@@ -15,23 +15,8 @@ const data: iData[] = [
   },
   {
     id: 1,
-    name: "sammy",
-    age: 14,
-  },
-  {
-    id: 1,
-    name: "sammy",
-    age: 14,
-  },
-  {
-    id: 1,
-    name: "sammy",
-    age: 14,
-  },
-  {
-    id: 1,
-    name: "sammy",
-    age: 14,
+    name: "ayo",
+    age: 133,
   },
 ];
 
@@ -54,8 +39,8 @@ const server = http.createServer(
 
     const container: any = [];
     req
-      .on("data", (bits: any) => {
-        container.push(bits);
+      .on("data", (bit: any) => {
+        container.push(bit);
       })
       .on("end", () => {
         if (url === "/about" && method === "GET") {
