@@ -17,7 +17,7 @@ const data: iData[] = [
   },
   {
     id: 1,
-    name: "ayo",
+    name: "ahmed",
     age: 133,
     stack: "Full-Stack",
   },
