@@ -1,5 +1,5 @@
 import http, { IncomingMessage, ServerResponse } from "http";
-const port = 3197;
+const port = 4568;
 
 interface iData {
   id: number;
@@ -46,7 +46,7 @@ const server = http.createServer(
         container.push(bit);
       })
       .on("end", () => {
-        if (url === "/about" && method === "GET") {
+        if (url === "/" && method === "GET") {
           status = 200;
           response.message = "hurray";
           response.success = true;
