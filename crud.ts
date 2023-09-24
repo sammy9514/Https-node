@@ -95,7 +95,7 @@ const server = http.createServer(
           if (findobject === false) {
             status = 404;
 
-            (response.message = " not Found"),
+            (response.message = "user not Found"),
               (response.data = null),
               // (response.success = false);
 
