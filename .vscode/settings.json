@@ -1,6 +1,6 @@
 {
   "remote.restoreForwardedPorts": true,
-  "editor.tabSize": 4,
+  "editor.tabSize": 2,
   "editor.cursorStyle": "line",
   "codesnap.backgroundColor": "#abb8c3"
 }

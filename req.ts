@@ -34,9 +34,8 @@ const port = 2001;
 //   console.log("run", port);
 // });
 
-
-const server = http.createServer((req: IncomingMessage, res: ServerResponse<IncomingMessage>) => {
-  req.statusCode = 200
-
-  res.
-})
+const server = http.createServer(
+  (req: IncomingMessage, res: ServerResponse<IncomingMessage>) => {
+    req.statusCode = 200;
+  }
+);

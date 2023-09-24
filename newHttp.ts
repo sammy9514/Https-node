@@ -76,7 +76,7 @@ const server = http.createServer(
         }
 
         //post method
-        if (url === "/" && method === "POST") {
+        if (url === "" && method === "POST") {
           status = 201;
           const body = JSON.parse(container);
           set08.push(body);
