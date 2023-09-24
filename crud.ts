@@ -87,11 +87,12 @@ const server = http.createServer(
           let details: any = url?.split("/")[1];
           let datavalue = parseInt(details);
           console.log(details);
-          let findobject = data.findIndex((el) => {
+          let findobject = data.map((el) => {
             return el.id === datavalue;
           });
+          // console.log(findobject);
 
-          if (findobject === -1) {
+          if (findobject === findobject) {
             status = 404;
 
             (response.message = "User not Found"),
