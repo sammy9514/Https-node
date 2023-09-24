@@ -103,14 +103,14 @@ const server = http.createServer(
 
             res.end();
           } else {
-            const updateusername = build.name;
+            const updateusername = build.age;
 
             data = data.map((user: any) => {
               if (user?.id === datavalue) {
                 return {
                   id: user?.id,
-                  name: updateusername,
-                  age: user?.age,
+                  name: user?.name,
+                  age: updateusername,
                 };
               }
 
