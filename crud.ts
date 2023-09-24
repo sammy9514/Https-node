@@ -92,7 +92,7 @@ const server = http.createServer(
           });
           // console.log(findobject);
 
-          if (findobject === findobject) {
+          if (findobject[4] === false) {
             status = 404;
 
             (response.message = "User not Found"),
