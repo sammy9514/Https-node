@@ -80,60 +80,53 @@ const server = http.createServer(
         }
 
         //PATCH method
+
         if (method === "PATCH") {
           const build = JSON.parse(container);
 
-          let getId: any = url?.split("/")[1];
-          let details = parseInt(getId);
+          let details: any = url?.split("/")[1];
+          let datavalue = parseInt(details);
           console.log(details);
+          let findobject = data.findIndex((el) => {
+            return el.id === datavalue;
+          });
+
+          if (findobject === -1) {
+            status = 404;
+
+            (response.message = "User not Found"),
+              (response.data = null),
+              // (response.success = false);
+
+              res.write(JSON.stringify({ response, status }));
+
+            res.end();
+          } else {
+            const updateusername = build.name;
+
+            data = data.map((user: any) => {
+              if (user?.id === datavalue) {
+                return {
+                  id: user?.id,
+                  name: updateusername,
+                  age: user?.age,
+                };
+              }
+
+              return user;
+            });
+
+            status = 200;
+
+            (response.message = "User Updated"),
+              (response.data = data),
+              // (response.success = true);
+
+              res.write(JSON.stringify({ response, status }));
+
+            res.end();
+          }
         }
-
-        // if (method === "PATCH") {
-        //   const build = JSON.parse(container);
-
-        //   let details: any = url?.split("/")[1];
-        //   let datavalue = parseInt(details);
-        //   console.log(details);
-        //   let findobject = data.some((el) => {
-        //     return el.id === datavalue;
-        //   });
-
-        //   if (findobject === false) {
-        //     status = 404;
-
-        //     (response.message = "User not Found"),
-        //       (response.data = null),
-        //       // (response.success = false);
-
-        //       res.write(JSON.stringify({ response, status }));
-
-        //     res.end();
-        //   } else {
-        //     const updateusername = build.name;
-
-        //     data = data.map((user: any) => {
-        //       if (user?.id === datavalue) {
-        //         return {
-        //           id: user?.id,
-        //           name: updateusername,
-        //           age: user?.age,
-        //         };
-        //       }
-
-        //       return user;
-        //     });
-
-        //     status = 200;
-
-        //     (response.message = "User Updated"),
-        //       (response.data = data),
-        //       // (response.success = true);
-
-        //       res.write(JSON.stringify({ response, status }));
-
-        //     res.end();
-        //   }
-        // }
       });
   }
 );
@@ -141,3 +134,20 @@ const server = http.createServer(
 server.listen(port, () => {
   console.log("running");
 });
+
+//  if (method === "PATCH") {
+//           const build = JSON.parse(container);
+
+//           let getId: any = url?.split("/")[1];
+//           let details = parseInt(getId);
+//           console.log(details);
+
+//           let findObjId = data.findIndex((el)=> {
+//             return(el.id === details)
+//           })
+
+//           if (findObjId === -1) {
+//             status = 404
+//             response.message = "failed to update"
+//             response.data = null
+//           }
