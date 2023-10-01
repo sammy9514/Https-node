@@ -58,21 +58,23 @@ const server = http.createServer(
         container.push(chunk);
       })
       .on("end", () => {
-        //GET method
-        if (url === "/" && method === "GET") {
+        //GET
+        if (method === "GET" && url === "/") {
           status = 200;
-          response.message = "Success";
+          response.message = "Data gotten successfully";
           response.data = data;
 
           res.write(JSON.stringify({ response, status }));
           res.end();
         }
 
-        //POST method
-        if (url === "/" && method === "POST") {
-          const body = JSON.parse(container);
+        //POST
+        if (method === "POST" && url === "/") {
+          let body = JSON.parse(container);
           data.push(body);
-          response.message = "Posted";
+
+          status = 200;
+          response.message = "Data added succesfully";
           response.data = data;
 
           res.write(JSON.stringify({ response, status }));
@@ -80,51 +82,77 @@ const server = http.createServer(
         }
 
         //PATCH method
-
         if (method === "PATCH") {
           const build = JSON.parse(container);
-
-          let details: any = url?.split("/")[1];
-          let datavalue = parseInt(details);
-          console.log(details);
-          let findobject = data.findIndex((el) => {
-            return el.id === datavalue;
+          let getId: any = url?.split("/")[1];
+          let idToNum = parseInt(getId);
+          let findObjId = data.findIndex((el) => {
+            return el.id === idToNum;
           });
-          // console.log(findobject);
-
-          if (findobject === -1) {
+          if (findObjId === -1) {
             status = 404;
+            response.message = "user not found";
+            response.data = null;
 
-            (response.message = "user not Found"),
-              (response.data = null),
-              // (response.success = false);
-
-              res.write(JSON.stringify({ response, status }));
-
-            res.end();
+            res.write(JSON.stringify({ response, status }));
           } else {
-            const updateuserage = build.age;
+            const newName = build.name;
 
-            data = data.map((user: any) => {
-              if (user?.id === datavalue) {
+            data = data.map((user) => {
+              if (user.id === idToNum) {
                 return {
-                  id: user?.id,
-                  name: user?.name,
-                  age: updateuserage,
+                  id: user.id,
+                  name: newName,
+                  age: user.age,
+                  set: user.set,
                 };
               }
+              return user;
+            });
+            status = 200;
 
+            response.message = "updated";
+            response.data = data;
+            res.write(JSON.stringify({ response, status }));
+            res.end();
+          }
+        }
+
+        if (method === "PUT") {
+          const build = JSON.parse(container);
+          let getId: any = url?.split("/")[1];
+          let numId = parseInt(getId);
+          let findObObjId = data.findIndex((el) => {
+            return el.id === numId;
+          });
+
+          if (findObObjId === -1) {
+            response.message = "failed";
+            response.data = null;
+            status = 404;
+
+            res.write(JSON.stringify({ response, status }));
+          } else {
+            const updateName = build.name;
+            const updateAge = build.age;
+            const updateSet = build.set;
+
+            data = data.map((user) => {
+              if (numId === user.id) {
+                return {
+                  id: user.id,
+                  name: updateName,
+                  age: updateAge,
+                  set: updateAge,
+                };
+              }
               return user;
             });
 
             status = 200;
-
-            (response.message = "User Updated"),
-              (response.data = data),
-              // (response.success = true);
-
-              res.write(JSON.stringify({ response, status }));
-
+            response.message = "success";
+            response.data = data;
+            res.write(JSON.stringify({ response, status }));
             res.end();
           }
         }
@@ -137,18 +165,49 @@ server.listen(port, () => {
 });
 
 //  if (method === "PATCH") {
-//           const build = JSON.parse(container);
+//    const build = JSON.parse(container);
 
-//           let getId: any = url?.split("/")[1];
-//           let details = parseInt(getId);
-//           console.log(details);
+//    let details: any = url?.split("/")[1];
+//    let datavalue = parseInt(details);
+//    console.log(details);
+//    let findobject = data.findIndex((el) => {
+//      return el.id === datavalue;
+//    });
+//    // console.log(findobject);
 
-//           let findObjId = data.findIndex((el)=> {
-//             return(el.id === details)
-//           })
+//    if (findobject === -1) {
+//      status = 404;
 
-//           if (findObjId === -1) {
-//             status = 404
-//             response.message = "failed to update"
-//             response.data = null
-//           }
+//      (response.message = "user not Found"),
+//        (response.data = null),
+//        // (response.success = false);
+
+//        res.write(JSON.stringify({ response, status }));
+
+//      res.end();
+//    } else {
+//      const updateuserage = build.age;
+
+//      data = data.map((user: any) => {
+//        if (user?.id === datavalue) {
+//          return {
+//            id: user?.id,
+//            name: user?.name,
+//            age: updateuserage,
+//          };
+//        }
+
+//        return user;
+//      });
+
+//      status = 200;
+
+//      (response.message = "User Updated"),
+//        (response.data = data),
+//        // (response.success = true);
+
+//        res.write(JSON.stringify({ response, status }));
+
+//      res.end();
+//    }
+//  }
